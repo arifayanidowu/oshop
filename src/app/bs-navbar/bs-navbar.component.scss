@@ -1,0 +1,27 @@
+@import "./hamburgers";
+.navbar-brand {
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: rgb(131, 125, 125);
+  span {
+    color: rgb(43, 41, 68);
+    font-size: 1.6rem;
+    font-style: italic;
+    font-family: "rubik";
+  }
+}
+
+@media (max-width: 767.98px) {
+  .hamburger {
+    display: block;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+@media (min-width: 767.99px) {
+  .hamburger {
+    display: none;
+  }
+}

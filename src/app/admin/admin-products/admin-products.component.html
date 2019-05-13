@@ -1,0 +1,26 @@
+<div class="mt-3 mb-3">
+  <a routerLink="/admin/products/new" class="btn btn-primary">New Product</a>
+</div>
+
+<table class="table table-inverse table-striped">
+  <thead class="thead-inverse">
+    <tr>
+      <th>Title</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products$ | async">
+      <td scope="row">{{ product.title }}</td>
+      <td>{{ product.price | currencyFormat }}</td>
+      <td>
+        <a
+          [routerLink]="['/admin/products/', product.key]"
+          class="btn btn-light btn-sm"
+          ><i class="fas fa-pencil-alt"></i> Edit</a
+        >
+      </td>
+    </tr>
+  </tbody>
+</table>
