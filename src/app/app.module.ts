@@ -7,6 +7,8 @@ import { AngularFireDatabaseModule } from "@angular/fire/database";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { CustomFormsModule } from "ngx-custom-validators";
+import { MatTableModule } from "@angular/material/table";
+import { DataTableModule } from "angular7-data-table";
 
 import { AppComponent } from "./app.component";
 import { environment } from "src/environments/environment";
@@ -28,7 +30,8 @@ import { ProductFormComponent } from "./admin/product-form/product-form.componen
 import { CategoryService } from "./services/category.service";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ProductService } from "./services/product.service";
-import { CurrencyFormatPipe } from './currency-format.pipe';
+import { CurrencyFormatPipe } from "./currency-format.pipe";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -54,8 +57,11 @@ import { CurrencyFormatPipe } from './currency-format.pipe';
     CustomFormsModule,
     AngularFireDatabaseModule,
     ReactiveFormsModule,
+    MatTableModule,
     AngularFireAuthModule,
-    AngularFireModule.initializeApp(environment.firebase)
+    AngularFireModule.initializeApp(environment.firebase),
+    BrowserAnimationsModule,
+    DataTableModule.forRoot()
   ],
   providers: [
     AuthService,

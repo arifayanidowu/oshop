@@ -3,6 +3,7 @@ import { ProductService } from "src/app/services/product.service";
 import { map } from "rxjs/operators";
 import { Subscription } from "rxjs";
 import { Product } from "src/app/models/product";
+import { DataTableResource } from "angular7-data-table";
 
 @Component({
   selector: "app-admin-products",
@@ -11,7 +12,9 @@ import { Product } from "src/app/models/product";
 })
 export class AdminProductsComponent implements OnInit, OnDestroy {
   products: Product[];
-  filteredProducts: any[];
+  items: Product[] = [];
+  tableResource: DataTableResource<Product>;
+  itemCount: number;
   subscription: Subscription;
   constructor(private productService: ProductService) {}
 
@@ -24,15 +27,30 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
           changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
         )
       )
-      .subscribe(p => (this.filteredProducts = this.products = p));
+      .subscribe(products => {
+        this.products = products;
+        this.initializeTable(products);
+      });
+  }
+
+  private initializeTable(products: Product[]) {
+    this.tableResource = new DataTableResource(products);
+    this.tableResource.query({ offset: 0 }).then(items => (this.items = items));
+    this.tableResource.count().then(count => (this.itemCount = count));
+  }
+
+  reloadItems(params) {
+    if (!this.tableResource) return;
+    this.tableResource.query(params).then(items => (this.items = items));
   }
 
   filter(query: string) {
-    this.filteredProducts = query
+    const filteredProducts = query
       ? this.products.filter(p =>
           p.title.toLowerCase().includes(query.toLowerCase())
         )
       : this.products;
+    this.initializeTable(filteredProducts);
   }
 
   ngOnDestroy() {

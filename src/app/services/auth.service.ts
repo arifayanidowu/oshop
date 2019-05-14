@@ -28,11 +28,12 @@ export class AuthService {
     this.afAuth.auth
       .signInWithPopup(new auth.GoogleAuthProvider())
       .then(user => {
-        if (user) {
-          this.userService.save(user.user);
-          let redirectUrl = JSON.parse(localStorage.getItem("returnUrl"));
-          this.router.navigateByUrl(redirectUrl);
-        }
+        if (!user) return;
+        this.userService.save(user.user);
+        let redirectUrl = JSON.parse(localStorage.getItem("returnUrl"));
+        if (!redirectUrl) return;
+        localStorage.removeItem("returnUrl");
+        this.router.navigateByUrl(redirectUrl);
       });
     // this.afAuth.auth.signInWithRedirect(new auth.GithubAuthProvider());
   }
