@@ -2,6 +2,16 @@
   <a routerLink="/admin/products/new" class="btn btn-primary">New Product</a>
 </div>
 
+<div class="mb-3">
+  <input
+    type="text"
+    #query
+    (keyup)="filter(query.value)"
+    class="form-control"
+    placeholder="Search..."
+  />
+</div>
+
 <table class="table table-inverse table-striped">
   <thead class="thead-inverse">
     <tr>
@@ -11,7 +21,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let product of products$ | async">
+    <tr *ngFor="let product of filteredProducts">
       <td scope="row">{{ product.title }}</td>
       <td>{{ product.price | currencyFormat }}</td>
       <td>
