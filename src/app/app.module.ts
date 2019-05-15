@@ -33,6 +33,7 @@ import { ProductService } from "./services/product.service";
 import { CurrencyFormatPipe } from "./currency-format.pipe";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ProductFilterComponent } from './products/product-filter/product-filter.component';
+import { ProductCardComponent } from './product-card/product-card.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { ProductFilterComponent } from './products/product-filter/product-filter
     LoginComponent,
     ProductFormComponent,
     CurrencyFormatPipe,
-    ProductFilterComponent
+    ProductFilterComponent,
+    ProductCardComponent
   ],
   imports: [
     BrowserModule,
