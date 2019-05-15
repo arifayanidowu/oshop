@@ -32,6 +32,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ProductService } from "./services/product.service";
 import { CurrencyFormatPipe } from "./currency-format.pipe";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { ProductFilterComponent } from './products/product-filter/product-filter.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
     AdminOrdersComponent,
     LoginComponent,
     ProductFormComponent,
-    CurrencyFormatPipe
+    CurrencyFormatPipe,
+    ProductFilterComponent
   ],
   imports: [
     BrowserModule,
