@@ -24,7 +24,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
       .snapshotChanges()
       .pipe(
         map(changes =>
-          changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+          changes.map((c: any) => ({ key: c.payload.key, ...c.payload.val() }))
         )
       )
       .subscribe(products => {
