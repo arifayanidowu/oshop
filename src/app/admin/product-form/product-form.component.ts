@@ -32,7 +32,7 @@ export class ProductFormComponent implements OnInit {
         .get(this.id)
         .valueChanges()
         .pipe(take(1))
-        .subscribe(p => (this.product = p));
+        .subscribe((p: any) => (this.product = p));
   }
   save(product) {
     if (this.id) this.productService.update(this.id, product);

@@ -2,7 +2,7 @@ import { Product } from "src/app/models/product";
 import { ActivatedRoute } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { ProductService } from "../services/product.service";
-import { switchMap } from "rxjs/operators";
+import { switchMap, map } from "rxjs/operators";
 
 @Component({
   selector: "app-products",
@@ -22,8 +22,11 @@ export class ProductsComponent implements OnInit {
   ngOnInit() {
     this.productService
       .getAll()
-      .valueChanges()
+      .snapshotChanges()
       .pipe(
+        map(products =>
+          products.map(p => ({ key: p.payload.key, ...p.payload.val() }))
+        ),
         switchMap((products: any) => {
           this.products = products;
           return this.route.queryParamMap;

@@ -28,10 +28,10 @@ export class AuthService {
     this.afAuth.auth
       .signInWithPopup(new auth.GoogleAuthProvider())
       .then(user => {
-        if (!user) return;
+        this.falsify(user);
         this.userService.save(user.user);
         let redirectUrl = JSON.parse(localStorage.getItem("returnUrl"));
-        if (!redirectUrl) return;
+        this.falsify(redirectUrl);
         localStorage.removeItem("returnUrl");
         this.router.navigateByUrl(redirectUrl);
       });
@@ -51,5 +51,9 @@ export class AuthService {
         return of(null);
       })
     );
+  }
+
+  falsify(data) {
+    if (!data) return;
   }
 }
