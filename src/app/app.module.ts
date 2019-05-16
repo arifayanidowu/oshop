@@ -1,3 +1,4 @@
+import { ShoppingCartService } from "./services/shopping-cart.service";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 
@@ -32,8 +33,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ProductService } from "./services/product.service";
 import { CurrencyFormatPipe } from "./currency-format.pipe";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { ProductFilterComponent } from './products/product-filter/product-filter.component';
-import { ProductCardComponent } from './product-card/product-card.component';
+import { ProductFilterComponent } from "./products/product-filter/product-filter.component";
+import { ProductCardComponent } from "./product-card/product-card.component";
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { ProductCardComponent } from './product-card/product-card.component';
     UserService,
     AdminAuthGuard,
     CategoryService,
-    ProductService
+    ProductService,
+    ShoppingCartService
   ],
   bootstrap: [AppComponent]
 })

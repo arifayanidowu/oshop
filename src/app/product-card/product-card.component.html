@@ -5,6 +5,8 @@
     <p class="card-text">
       {{ product.price | currencyFormat: "NGN":true }}
     </p>
-    <a href="#" class="btn btn-primary">Add to Cart</a>
+    <button (click)="addToCart(product)" class="btn btn-primary">
+      Add to Cart
+    </button>
   </div>
 </div>
