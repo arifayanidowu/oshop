@@ -34,9 +34,10 @@ export class ShoppingCartService {
     item$
       .valueChanges()
       .pipe(take(1))
-      .subscribe((item: Cart) => {
-        if (item) item$.update({ quantity: item.quantity + 1 });
-        else item$.set({ product, quantity: 1 });
-      });
+      .subscribe((item: Cart) =>
+        item
+          ? item$.update({ quantity: item.quantity + 1 })
+          : item$.set({ product, quantity: 1 })
+      );
   }
 }
