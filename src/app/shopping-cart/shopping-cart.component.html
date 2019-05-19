@@ -8,15 +8,24 @@
       <tr>
         <th>Product</th>
         <th>Quantity</th>
-        <th></th>
+        <th>Price</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let items of cart.items">
         <td>{{ items.product.title }}</td>
         <td>{{ items.quantity }}</td>
-        <td></td>
+        <td>{{ items.totalPrice | currencyFormat }}</td>
       </tr>
     </tbody>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th></th>
+        <th>
+          {{ cart.totalPrice | currencyFormat }}
+        </th>
+      </tr>
+    </tfoot>
   </table>
 </ng-container>

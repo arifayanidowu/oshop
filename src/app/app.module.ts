@@ -35,6 +35,7 @@ import { CurrencyFormatPipe } from "./currency-format.pipe";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ProductFilterComponent } from "./products/product-filter/product-filter.component";
 import { ProductCardComponent } from "./product-card/product-card.component";
+import { ProductQuantityComponent } from './product-quantity/product-quantity.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ProductCardComponent } from "./product-card/product-card.component";
     ProductFormComponent,
     CurrencyFormatPipe,
     ProductFilterComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    ProductQuantityComponent
   ],
   imports: [
     BrowserModule,
