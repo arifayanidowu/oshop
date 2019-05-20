@@ -1,10 +1,16 @@
+import { Product } from "src/app/models/product";
 import { Cart } from "./cart";
 export class CartItem {
   items: Cart[] = [];
   constructor(public itemsMap: { [productId: string]: Cart }) {
+    this.itemsMap = this.itemsMap || {};
+
     for (let productId in this.itemsMap) {
       let item = itemsMap[productId];
-      this.items.push(new Cart(item.product, item.quantity));
+      let x = new Cart();
+      Object.assign(x, item);
+      x.key = productId;
+      this.items.push(x);
     }
   }
 
@@ -18,6 +24,11 @@ export class CartItem {
       sum += this.items[productId].totalPrice;
     }
     return sum;
+  }
+
+  getQuantity(product: Product) {
+    const item = this.itemsMap[product.key];
+    return item ? item.quantity : 0;
   }
 
   get totalItemsCount() {
