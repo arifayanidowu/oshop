@@ -1,6 +1,5 @@
-import { OnInit } from "@angular/core";
 import { Product } from "./product";
-export class Cart extends OnInit {
+export class Cart {
   key: string;
   title: string;
   price: number;
@@ -8,13 +7,7 @@ export class Cart extends OnInit {
   quantity: number;
 
   constructor(init?: Partial<Cart>) {
-    super();
     Object.assign(this, init);
-  }
-  ngOnInit(): void {
-    if (this.quantity === undefined) {
-      this.quantity = 0;
-    }
   }
 
   get totalPrice() {

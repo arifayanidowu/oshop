@@ -1,16 +1,19 @@
-import { Product } from "src/app/models/product";
+import { Product } from "./product";
 import { Cart } from "./cart";
 export class CartItem {
   items: Cart[] = [];
-  constructor(public itemsMap: { [productId: string]: Cart }) {
-    this.itemsMap = this.itemsMap || {};
+  constructor(private itemsMap: { [productId: string]: Cart }) {
+    this.itemsMap = itemsMap || {};
 
     for (let productId in this.itemsMap) {
       let item = itemsMap[productId];
-      let x = new Cart();
-      Object.assign(x, item);
-      x.key = productId;
-      this.items.push(x);
+      // this.items.push(new Cart({ ...item, key: productId }));
+      this.items = [...this.items, new Cart({ ...item, key: productId })];
+      console.log(this.items);
+      // let x = new Cart();
+      // Object.assign(x, item);
+      // x.key = productId;
+      // this.items.push(x);
     }
   }
 
