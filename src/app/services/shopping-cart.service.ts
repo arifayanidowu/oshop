@@ -1,11 +1,19 @@
-import { Observable, of } from "rxjs";
+import { Observable, of, Subject, throwError } from "rxjs";
 import { CartItem } from "./../models/cartItems";
 import { Router } from "@angular/router";
 import { Cart } from "./../models/cart";
 import { AngularFireDatabase, AngularFireObject } from "@angular/fire/database";
 import { Injectable } from "@angular/core";
 import { Product } from "../models/product";
-import { take, map, switchMap, filter } from "rxjs/operators";
+import {
+  take,
+  map,
+  switchMap,
+  filter,
+  multicast,
+  publish,
+  catchError
+} from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
@@ -13,13 +21,13 @@ import { take, map, switchMap, filter } from "rxjs/operators";
 export class ShoppingCartService {
   constructor(private db: AngularFireDatabase, private router: Router) {}
 
-  // async getCart(): Promise<Observable<CartItem>> {
-  //   const cartId = await this.getOrCreateCartId();
-  //   return this.db
-  //     .object(`/shopping-carts/${cartId}`)
-  //     .valueChanges()
-  //     .pipe(map((x: any) => new CartItem(x.items)));
-  // }
+  async getCart(): Promise<Observable<CartItem>> {
+    const cartId = await this.getOrCreateCartId();
+    return this.db
+      .object(`/shopping-carts/${cartId}`)
+      .valueChanges()
+      .pipe(map((x: CartItem) => new CartItem(x.items)));
+  }
 
   async addToCart(product: Product) {
     this.updateItem(product, 1);
@@ -56,29 +64,26 @@ export class ShoppingCartService {
     const cartId = await this.getOrCreateCartId();
     const item$ = await this.getItem(cartId, product.key);
 
-    item$.valueChanges().subscribe((item: Cart) => {
-      item.quantity = product.quantity;
-      let quantity = (product.quantity || 0) + change;
-
-      console.log(quantity);
-      if (quantity === 0) {
-        item$.remove();
-      } else {
-        item$.update({
-          title: product.title,
-          price: product.price,
-          imageUrl: product.imageUrl,
-          quantity
-        });
-      }
-    });
-  }
-
-  async getCart(): Promise<Observable<CartItem>> {
-    const cartId = await this.getOrCreateCartId();
-    return this.db
-      .object(`/shopping-carts/${cartId}`)
+    item$
       .valueChanges()
-      .pipe(map((x: any) => new CartItem(x.items)));
+      .pipe(
+        take(1),
+        catchError(err => throwError(err))
+      )
+      .subscribe((item: Cart) => {
+        let quantity = (product.quantity || item.quantity) + change;
+
+        console.log(quantity);
+        if (quantity === 0) {
+          item$.remove();
+        } else {
+          item$.update({
+            title: product.title,
+            price: product.price,
+            imageUrl: product.imageUrl,
+            quantity
+          });
+        }
+      });
   }
 }
